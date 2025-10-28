@@ -1,0 +1,40 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery_worker
+    volumes:
+      - .:/app  # mount local project for Celery code
+    command: celery -A email_campaign_system worker --loglevel=info
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile    
+    container_name: celery_beat
+    volumes:
+      - .:/app
+    command: celery -A email_campaign_system beat --loglevel=info
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+
+  smtp:
+    image: python:3.11-slim
+    container_name: smtp_debug
+    command: python -m smtpd -n -c DebuggingServer 0.0.0.0:1025
+    ports:
+      - "1025:1025"
+

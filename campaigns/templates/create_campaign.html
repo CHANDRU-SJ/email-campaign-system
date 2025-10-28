@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Campaign</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        form {
+            max-width: 600px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="datetime-local"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        textarea { height: 150px; }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create a New Email Campaign</h1>
+
+    {% if message %}
+        <p id="flash-message" style="color:green;">{{ message }}</p>
+    {% endif %}
+    {% if error %}
+        <p id="flash-message" style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Campaign Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="subject">Subject Line</label>
+        <input type="text" id="subject" name="subject" required>
+
+        <label for="content">Email Content (HTML or plain text)</label>
+        <textarea id="content" name="content" required></textarea>
+
+        <label for="scheduled_time">Scheduled Time for Sending</label>
+        <input type="datetime-local" id="scheduled_time" name="scheduled_time">
+
+        <button type="submit">Create Campaign</button>
+    </form>
+
+    <script>
+        // Hide the message after 3 seconds (3000 ms)
+        const msg = document.getElementById("flash-message");
+        if (msg) {
+            setTimeout(() => {
+                msg.style.transition = "opacity 0.5s ease";
+                msg.style.opacity = "0";
+                setTimeout(() => msg.remove(), 500); // remove completely after fade out
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

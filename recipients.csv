@@ -1,0 +1,11 @@
+name,email,subscription_status
+John Doe,john.doe@example.com,subscribed
+Jane Smith,jane.smith@example.com,subscribed
+Robert Brown,robert.brown@example.com,unsubscribed
+Emily Davis,emily.davis@example.com,subscribed
+Michael Johnson,michael.johnson@example.com,unsubscribed
+Lisa Williams,lisa.williams@example.com,subscribed
+David Miller,david.miller@example.com,subscribed
+Sarah Wilson,sarah.wilson@example.com,unsubscribed
+Chris Taylor,chris.taylor@example.com,subscribed
+Olivia Martinez,olivia.martinez@example.com,subscribed
