@@ -83,11 +83,12 @@ DB_PORT=5432
 REDIS_URL=redis://localhost:6379/0
 
 # Email
-EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST=localhost
 EMAIL_PORT=1025
 EMAIL_USE_TLS=False
-EMAIL_USE_SSL=False
+
+FROM_EMAIL=no-reply@company.com
+ADMIN_EMAIL=admin@company.com
 ```
 
 
@@ -139,7 +140,7 @@ python -m smtpd -c DebuggingServer -n localhost:1025
 #### Start Celery Worker
 
 ```
-celery -A email_campaign_system worker --loglevel=info
+celery -A email_campaign_system worker --loglevel=info --pool=solo
 ```
 
 
@@ -186,7 +187,7 @@ python manage.py runserver
 redis-server
 
 # Terminal 3
-celery -A email_campaign_system worker --loglevel=info
+celery -A email_campaign_system worker --loglevel=info --pool=solo
 
 # Terminal 4
 celery -A email_campaign_system beat --loglevel=info
